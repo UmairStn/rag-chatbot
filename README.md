@@ -41,40 +41,20 @@ That's it. Your website now has an AI assistant powered by your own content.
 - **Google Gemini AI** - LLM for intelligent responses
 - **ChromaDB** - Database for storing website content
 - **BeautifulSoup** - Website scraping
+- **LangChain** - AI framework
 
-### Frontend (What Users See)
-- **React 18** - Website UI framework
-- **TypeScript** - Safer JavaScript
-- **Vite** - Lightning-fast build tool
-- **SCSS** - Beautiful styling
-- **Shadow DOM** - Isolated widget (no CSS conflicts)
-
-### Key Technology: RAG
-**RAG = Retrieval Augmented Generation**
-- Takes your website content
-- Finds relevant information for questions
-- Uses AI to generate answers from YOUR content
-- NOT making up answers (grounded in your data)
+### Widget (What Gets Embedded)
+- **Single JavaScript file** - One UMD bundle
+- **Shadow DOM** - Isolated styling (no CSS conflicts)
+- **Works anywhere** - WordPress, Shopify, custom sites, static HTML
+- **No dependencies** - Pure JavaScript, works in any browser
 
 ---
 
-## 🚀 How Easy Is It to Add to Your Website?
+## 🚀 How Easy Is It to Add Widget to Your Website?
 
-### Step 1: Train the Bot (Admin Dashboard)
-```
-Go to http://localhost:3000
-↓
-Paste your website URL
-↓
-Click "Train Bot"
-↓
-Done - bot has read your website
-```
-
-### Step 2: Get the Code
-```
-Copy this auto-generated code:
-
+### Step 1: Copy the Widget Code
+```javascript
 <script>
   window.RAGChatBot = {
     apiUrl: "https://api.example.com",
@@ -85,25 +65,31 @@ Copy this auto-generated code:
 <script src="https://cdn.example.com/rag-chat-widget.umd.js"></script>
 ```
 
-### Step 3: Add to Any Website
+### Step 2: Paste on Your Website
 ```html
-<!-- Paste into your website HTML (any website, any platform) -->
-
-<!-- Step 1: Configuration -->
-<script>
-  window.RAGChatBot = {
-    apiUrl: "https://api.example.com",
-    apiKey: "sk_live_xxxxx",
-    clientId: "shop_001"
-  };
-</script>
-
-<!-- Step 2: Load Widget -->
-<script src="https://cdn.example.com/rag-chat-widget.umd.js"></script>
+<!-- Your website HTML -->
+<html>
+  <head>
+    <title>My Website</title>
+  </head>
+  <body>
+    <!-- Your content here -->
+    
+    <!-- Paste widget code at the bottom -->
+    <script>
+      window.RAGChatBot = {
+        apiUrl: "https://api.example.com",
+        apiKey: "sk_live_xxxxx",
+        clientId: "shop_001"
+      };
+    </script>
+    <script src="https://cdn.example.com/rag-chat-widget.umd.js"></script>
+  </body>
+</html>
 ```
 
-### Step 4: Done!
-A chat bubble appears in the bottom-right corner automatically ✅
+### Step 3: Done!
+Chat bubble appears in bottom-right corner automatically ✅
 
 ---
 
@@ -127,22 +113,17 @@ User: "Great! How do I track my order?"
 
 ---
 
-## 🎯 Three Parts of This System
+## 🎯 Two Parts of This System
 
-### 1️⃣ Admin Dashboard
-**Who uses it:** You (the business owner)
-**What it does:** Train chatbot on your website
-**Where:** `http://localhost:3000` (during development)
+### 1️⃣ Backend API
+**What it does:** Stores your website content, searches it, generates AI responses
+**Technology:** Python FastAPI + Google Gemini + ChromaDB
+**Where:** Cloud server (hidden from users)
 
-### 2️⃣ Chat Widget  
-**Who uses it:** Your customers
-**What it does:** Chat with AI about your business
-**Where:** Embedded on your website
-
-### 3️⃣ Backend API
-**Who uses it:** The widget talks to it
-**What it does:** Stores content, searches, generates answers
-**Where:** Hidden from users (server-side)
+### 2️⃣ Chat Widget
+**What it does:** Appears on your website, lets customers chat
+**Technology:** Single JavaScript file (no dependencies)
+**Where:** Embedded on your website (visible to users)
 
 ---
 
@@ -172,30 +153,13 @@ Answer sent to widget
 
 ---
 
-## 🔑 Why This Is Different
+## ✨ Why This Is Easy
 
-| Feature | Traditional Chat | Our System |
-|---------|-----------------|-----------|
-| Knows about your site? | ❌ Generic AI | ✅ Only your content |
-| Setup time | 💀 Weeks | ⚡ Minutes |
-| Accuracy | 50% (hallucinations) | 95% (grounded) |
-| Cost | 💸 Expensive | 💰 Cheap |
-| Customization | Hard | Easy |
-
----
-
-## 🎁 What You Get
-
-```
-✅ Admin dashboard to train bot
-✅ Chat widget for your website  
-✅ One-line embed code
-✅ Works on WordPress, Shopify, custom sites, etc.
-✅ Mobile responsive
-✅ Beautiful UI
-✅ Multi-language support (via API)
-✅ 24/7 customer support chatbot
-```
+- ✅ **No coding** - Just copy-paste 2 lines
+- ✅ **No setup** - Backend hosted for you
+- ✅ **No dependencies** - Single JavaScript file
+- ✅ **No CSS conflicts** - Shadow DOM isolation
+- ✅ **Instant deployment** - Works immediately
 
 ---
 
@@ -245,55 +209,14 @@ AI: "We serve NYC, Boston, and Philadelphia..."
 
 ---
 
-## 🚀 Next Steps
+## 🚀 Quick Start
 
-1. **Train on your website** → Visit admin dashboard
-2. **Copy the code** → One line to add
-3. **Paste on your site** → Done
-4. **Customers chat** → 24/7 support
-5. **Reduce support tickets** → Save time
-6. **Increase sales** → Answer questions instantly
+1. **Get widget code** → From admin
+2. **Copy the code** → 2 lines of JavaScript
+3. **Paste on site** → Into your HTML
+4. **Done** → Chat bubble appears automatically ✅
 
----
 
-## 📞 How to Connect Widget to Your Website
-
-**It's literally copy-paste:**
-
-```html
-<!-- Your website HTML -->
-<html>
-  <head>
-    <title>My Website</title>
-  </head>
-  <body>
-    <!-- Your content here -->
-    
-    <!-- Add this 2 lines at the bottom of <body> -->
-    <script>
-      window.RAGChatBot = {
-        apiUrl: "https://api.example.com",
-        apiKey: "sk_live_xxxxx",
-        clientId: "shop_001"
-      };
-    </script>
-    <script src="https://cdn.example.com/rag-chat-widget.umd.js"></script>
-    
-  </body>
-</html>
-```
-
-**Chat bubble appears automatically** ✅
-
----
-
-## ✨ What Makes This Easy
-
-1. **No frontend skills needed** - It's just code to copy-paste
-2. **No backend setup** - We host it
-3. **No training required** - Website is auto-discovered  
-4. **No integration** - Truly single script tag
-5. **No maintenance** - We handle updates
 
 ---
 

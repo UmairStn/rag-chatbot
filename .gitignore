@@ -47,5 +47,3 @@ build/
 .next/
 *.pem
 .pem
-
-.vscode/
