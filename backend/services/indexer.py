@@ -2,9 +2,20 @@
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_community.vectorstores import Chroma
-from backend.core.config import Config
+from core.config import Config
 
-def index_website_data(WEBSITE_URL, client_id):
+def index_website_data(url, client_id):
+    """
+    Index website content and store vectors in ChromaDB
+    
+    Args:
+        url: Website URL to scrape and index
+        client_id: Unique client/shop identifier
+        
+    Returns:
+        dict: Status information with indexed chunk count if new indexing, 
+              or {"status": "already_indexed"} if data already exists
+    """
     from .scraper import scrape_website
     
     # 1. EMBEDDINGS: Initialize first (needed for Chroma check below)
@@ -20,10 +31,10 @@ def index_website_data(WEBSITE_URL, client_id):
     
     if len(existing_db.get()['ids']) > 0:
         print(f"✅ Data already indexed for {client_id}. Skipping...")
-        return
+        return {"status": "already_indexed", "message": f"Data for {client_id} already indexed"}
     
     # Only run if no data exists
-    raw_text = scrape_website(WEBSITE_URL)
+    raw_text = scrape_website(url)
     
     # 2. CHUNKING: Break long text into 1000-character pieces
     # Overlap ensures context isn't lost at the edges of the cut
@@ -38,6 +49,9 @@ def index_website_data(WEBSITE_URL, client_id):
         texts=chunks,
         metadatas=metadatas,
         embedding=embeddings,
-        persist_directory=Config.VECTOR_DB_PATH
+        persist_directory=Config.VECTOR_DB_PATH,
+        collection_name=client_id
     )
+    
     print(f"✅ Success: Indexed {len(chunks)} chunks for {client_id}")
+    return {"status": "success", "chunks_indexed": len(chunks), "message": f"Indexed {len(chunks)} chunks for {client_id}"}

@@ -3,7 +3,7 @@ from langchain_community.vectorstores import Chroma
 from langchain_classic.chains.retrieval import create_retrieval_chain
 from langchain_classic.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate
-from backend.core.config import Config
+from core.config import Config
 
 def get_chatbot_response(user_query, client_id):
     # Using gemini-embedding-001 - the standard embedding model for Google Generative AI

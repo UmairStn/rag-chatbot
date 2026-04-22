@@ -1,0 +1,49 @@
+# Frontend
+frontend/
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local
+frontend/.DS_Store
+
+# Backend
+backend/__pycache__/
+backend/*.py[cod]
+backend/*$py.class
+backend/.Python
+backend/venv/
+backend/env/
+backend/.venv
+backend/.env
+backend/.env.local
+backend/data/vector_db/
+backend/logs/
+backend/*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Root
+node_modules/
+.env.local
+*.log
+.cache/
+.pytest_cache/
+dist/
+build/
+
+# Miscellaneous
+.turbo/
+.next/
+*.pem
+.pem
