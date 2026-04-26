@@ -48,12 +48,23 @@ async def ingest_website(
             )
         
         # Index the website
-        chunks_count = await index_website_data(request.url, request.client_id)
+        result = index_website_data(request.url, request.client_id)
+        
+        # Handle already indexed response
+        if isinstance(result, dict) and result.get("status") == "already_indexed":
+            return IngestResponse(
+                status="already_indexed",
+                message="Data already indexed for this client",
+                client_id=request.client_id
+            )
+        
+        # Handle success response
+        chunks_indexed = result.get("chunks_indexed") if isinstance(result, dict) else result
         
         return IngestResponse(
             status="success",
             message=f"Successfully indexed website for {request.client_id}",
-            chunks_indexed=chunks_count,
+            chunks_indexed=chunks_indexed,
             client_id=request.client_id
         )
         

@@ -6,10 +6,10 @@
 (function(global) {
   'use strict';
 
+  // Use the window object injected by the server
   const config = global.RAGChatBot || {
-    apiUrl: 'http://localhost:8000',
-    apiKey: 'sk_test_chatbot_rag_2026_securekey123456',
-    clientId: 'shop_001'
+    apiUrl: 'http://localhost:3000',
+    clientId: 'default'
   };
 
   const styles = `
@@ -78,17 +78,21 @@
     input.onkeypress = (e) => { if (e.key === 'Enter') sendMessage(); };
 
     function sendMessage() {
+      const input = document.getElementById('rag-chat-input');
       const msg = input.value.trim();
       if (!msg) return;
 
       addMessage(msg, 'user');
       input.value = '';
-      send.disabled = true;
 
+      // Call the Proxy (3000) not the Backend (8000)
       fetch(`${config.apiUrl}/chat`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-API-Key': config.apiKey },
-        body: JSON.stringify({ query: msg, client_id: config.clientId })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          query: msg, 
+          client_id: config.clientId 
+        })
       })
       .then(r => r.json())
       .then(data => {
@@ -97,15 +101,9 @@
         } else {
           addMessage('Error: ' + (data.message || 'Unknown error'), 'bot');
         }
-        send.disabled = false;
       })
-      .catch(e => {
-        addMessage('❌ Connection error - check console', 'bot');
-        console.error('Widget error:', e);
-        send.disabled = false;
-      });
+      .catch(() => addMessage('❌ Connection error', 'bot'));
     }
-
     function addMessage(text, sender) {
       const el = document.createElement('div');
       el.className = `rag-chat-message ${sender}`;

@@ -1,4 +1,5 @@
 # Chunking & Vectorizing logic
+import os
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_community.vectorstores import Chroma
@@ -22,9 +23,13 @@ def index_website_data(url, client_id):
     # Using gemini-embedding-001 - the standard embedding model for Google Generative AI
     embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
     
+    # Create client-specific persist directory
+    client_db_path = os.path.join(Config.VECTOR_DB_PATH, client_id)
+    os.makedirs(client_db_path, exist_ok=True)
+    
     # Check if client already has indexed data
     existing_db = Chroma(
-        persist_directory=Config.VECTOR_DB_PATH,
+        persist_directory=client_db_path,
         collection_name=client_id,
         embedding_function=embeddings
     )
@@ -49,7 +54,7 @@ def index_website_data(url, client_id):
         texts=chunks,
         metadatas=metadatas,
         embedding=embeddings,
-        persist_directory=Config.VECTOR_DB_PATH,
+        persist_directory=client_db_path,
         collection_name=client_id
     )
     

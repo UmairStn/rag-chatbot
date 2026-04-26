@@ -1,5 +1,6 @@
+import os
 from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
-from langchain_community.vectorstores import Chroma
+from langchain_chroma import Chroma
 from langchain_classic.chains.retrieval import create_retrieval_chain
 from langchain_classic.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate
@@ -8,7 +9,10 @@ from core.config import Config
 def get_chatbot_response(user_query, client_id):
     # Using gemini-embedding-001 - the standard embedding model for Google Generative AI
     embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
-    db = Chroma(persist_directory=Config.VECTOR_DB_PATH, embedding_function=embeddings)
+    
+    # Use client-specific persist directory
+    client_db_path = os.path.join(Config.VECTOR_DB_PATH, client_id)
+    db = Chroma(persist_directory=client_db_path, embedding_function=embeddings, collection_name=client_id)
     
     # Setup the retriever with your multi-tenant filter
     retriever = db.as_retriever(search_kwargs={'filter': {'client_id': client_id}})

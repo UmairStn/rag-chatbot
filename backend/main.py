@@ -14,11 +14,11 @@ def main():
     Config.validate()
     
     # Define a sample client and website
-    client = "shop_001"
-    WEBSITE_URL = "https://www.simplytek.lk/" # Replace with a real website to test!
+    # client = "shop_001"
+    # WEBSITE_URL = "https://www.simplytek.lk/" # Replace with a real website to test!
     
     # STEP 1: Learn the website
-    index_website_data(WEBSITE_URL, client)
+    # index_website_data(WEBSITE_URL, client)
     
     # STEP 2: Start a chat loop
     print("\n--- RAG CHATBOT ACTIVE ---")
