@@ -37,7 +37,9 @@ async def chat(
     - **client_id**: The client ID used
     
     **Note:**
-    The website must be indexed first using the /ingest endpoint before queries will work
+    - The website must be indexed first using the /ingest endpoint before queries will work
+    - API provider is controlled in backend code only (not via request)
+    - To switch APIs: Edit CHAT_API_PROVIDER in services/chatbot.py
     """
     try:
         # Verify API key

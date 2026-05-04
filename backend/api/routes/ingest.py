@@ -21,11 +21,15 @@ async def ingest_website(
     api_key: str = Depends(API_KEY_HEADER)
 ):
     """
-    Ingest a website for the RAG system
+    Ingest website(s) for the RAG system
     
     **Parameters:**
-    - **url**: Website URL to ingest (e.g., https://example.com)
+    - **url**: Website URL(s) to ingest. Can be:
+      - Single URL string: `"https://example.com"`
+      - Multiple URLs array: `["https://example.com/home", "https://example.com/shop"]`
     - **client_id**: Unique identifier for the client/shop
+    - **use_sitemap**: If true, scrapes entire website using sitemap.xml (default: false)
+    - **api_provider**: Backend API for embeddings - 'google' (default) or 'openrouter' (manual control only)
     
     **Headers:**
     - **X-API-Key**: Your API key for authentication
@@ -35,6 +39,27 @@ async def ingest_website(
     - **message**: Description of the operation
     - **chunks_indexed**: Number of chunks created
     - **client_id**: The client ID used
+    
+    **Examples:**
+    
+    Scrape single URL with Google:
+    ```json
+    {
+        "url": "https://example.com",
+        "client_id": "shop_001",
+        "api_provider": "google"
+    }
+    ```
+    
+    Scrape entire website using OpenRouter:
+    ```json
+    {
+        "url": "https://example.com",
+        "client_id": "shop_001",
+        "use_sitemap": true,
+        "api_provider": "openrouter"
+    }
+    ```
     """
     try:
         # Verify API key
@@ -47,8 +72,15 @@ async def ingest_website(
                 detail="url and client_id are required"
             )
         
+        # If url is a list, validate it's not empty
+        if isinstance(request.url, list) and len(request.url) == 0:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="url list cannot be empty"
+            )
+        
         # Index the website
-        result = index_website_data(request.url, request.client_id)
+        result = index_website_data(request.url, request.client_id, use_sitemap=request.use_sitemap, api_provider=request.api_provider)
         
         # Handle already indexed response
         if isinstance(result, dict) and result.get("status") == "already_indexed":

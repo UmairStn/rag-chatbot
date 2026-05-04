@@ -39,3 +39,6 @@ env/
 # Local storage
 data/
 vector_db/
+
+
+TECHNICAL_DEEP_DIVE.md/

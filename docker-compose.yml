@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    env_file:
+      - ./.env
+    ports:
+      - "8000:8000"
+    environment:
+      API_HOST: 0.0.0.0
+      API_PORT: 8000
+      API_RELOAD: "False"
+      ALLOWED_ORIGINS: "http://localhost:8080,http://127.0.0.1:8080"
+    volumes:
+      - backend_vector_db:/app/backend/data/vector_db
+
+  widget:
+    build:
+      context: .
+      dockerfile: widget/Dockerfile
+    ports:
+      - "8080:80"
+
+volumes:
+  backend_vector_db:

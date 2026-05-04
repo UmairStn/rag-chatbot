@@ -1,27 +1,59 @@
 # Chunking & Vectorizing logic
 import os
+import logging
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_community.vectorstores import Chroma
 from core.config import Config
 
-def index_website_data(url, client_id):
+logger = logging.getLogger(__name__)
+
+def get_embeddings(api_provider="google"):
+    """
+    Get embeddings model based on API provider
+    
+    Args:
+        api_provider: 'google' or 'openrouter' (default: 'google')
+        
+    Returns:
+        Embeddings instance
+    """
+    if api_provider.lower() == "openrouter":
+        if not Config.OPENROUTER_API_KEY:
+            raise ValueError("❌ OPENROUTER_API_KEY not configured")
+        from langchain_openai import OpenAIEmbeddings
+        logger.info("🔗 Using OpenRouter embeddings")
+        return OpenAIEmbeddings(
+            model="text-embedding-3-small",
+            api_key=Config.OPENROUTER_API_KEY,
+            base_url="https://openrouter.ai/api/v1"
+        )
+    else:
+        # Default to Google
+        logger.info("🔗 Using Google embeddings")
+        return GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
+
+
+def index_website_data(url, client_id, use_sitemap=False, api_provider="google"):
     """
     Index website content and store vectors in ChromaDB
     
     Args:
-        url: Website URL to scrape and index
+        url: Website URL(s) to scrape and index. Can be:
+             - str: Single URL
+             - list: Multiple URLs (only when use_sitemap=False)
         client_id: Unique client/shop identifier
+        use_sitemap: If True, scrapes entire website using sitemap.xml
+        api_provider: 'google' (default) or 'openrouter' - for embeddings during indexing
         
     Returns:
         dict: Status information with indexed chunk count if new indexing, 
               or {"status": "already_indexed"} if data already exists
     """
-    from .scraper import scrape_website
+    from .scraper import scrape_website, scrape_website_sitemap, scrape_multiple_urls
     
     # 1. EMBEDDINGS: Initialize first (needed for Chroma check below)
-    # Using gemini-embedding-001 - the standard embedding model for Google Generative AI
-    embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
+    embeddings = get_embeddings(api_provider)
     
     # Create client-specific persist directory
     client_db_path = os.path.join(Config.VECTOR_DB_PATH, client_id)
@@ -39,7 +71,19 @@ def index_website_data(url, client_id):
         return {"status": "already_indexed", "message": f"Data for {client_id} already indexed"}
     
     # Only run if no data exists
-    raw_text = scrape_website(url)
+    # Use sitemap scraping if requested, otherwise handle single or multiple URLs
+    if use_sitemap:
+        if isinstance(url, list):
+            raise ValueError("use_sitemap=True but got multiple URLs. Set use_sitemap=False to scrape multiple URLs directly.")
+        print(f"🌐 Using sitemap-based scraping for {url}")
+        raw_text = scrape_website_sitemap(url)
+    else:
+        if isinstance(url, list):
+            print(f"📄 Using multiple URL scraping for {len(url)} URLs")
+            raw_text = scrape_multiple_urls(url, rate_limit_delay=1, max_urls=len(url))
+        else:
+            print(f"📄 Using single URL scraping for {url}")
+            raw_text = scrape_website(url)
     
     # 2. CHUNKING: Break long text into 1000-character pieces
     # Overlap ensures context isn't lost at the edges of the cut

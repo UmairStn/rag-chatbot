@@ -1,14 +1,17 @@
 # FastAPI and Web Server
 fastapi==0.104.1
 uvicorn[standard]==0.24.0
-pydantic==2.5.0
-pydantic-settings==2.1.0
+pydantic==2.8.2
+pydantic-settings==2.4.0
 
 # LangChain and AI/ML
-langchain==0.1.1
-langchain-google-genai==0.0.10
-langchain-community==0.0.12
+langchain==0.1.16
+langchain-community==0.0.36
+langchain-core==0.1.53
+langsmith==0.1.147
+langchain-google-genai==0.0.11
 langchain-text-splitters==0.0.1
+langchain-chroma==0.1.4
 
 # Vector Database
 chromadb==0.4.22
