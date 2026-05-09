@@ -3,10 +3,10 @@
 Guidance for coding agents working in this repository.
 
 ## Project Overview
-- Purpose: Multi-tenant RAG chatbot system with a FastAPI backend and a React + TypeScript frontend.
+- Purpose: Multi-tenant RAG chatbot system with a FastAPI backend and a pre-built embeddable chat widget (UMD, Shadow DOM).
 - Key parts:
   - `backend/`: API, ingestion, chat services, vector DB (ChromaDB).
-  - `frontend/`: Admin dashboard + embeddable chat widget (UMD, Shadow DOM).
+  - `widget/`: Pre-built UMD bundles served by nginx.
 
 ## Repo Map
 - `backend/main.py`: CLI entry point.
@@ -14,9 +14,7 @@ Guidance for coding agents working in this repository.
 - `backend/api/routes/ingest.py`: POST /ingest.
 - `backend/api/routes/chat.py`: POST /chat.
 - `backend/services/`: scraper, indexer, chatbot logic.
-- `frontend/src/pages/AdminDashboard.tsx`: Admin UI.
-- `frontend/src/components/ChatWidget.tsx`: Chat widget UI.
-- `frontend/src/widget/embed.tsx`: UMD widget entry.
+- `widget/*.umd.js`: Pre-built widget bundles.
 
 ## Setup
 ### Backend
@@ -28,32 +26,18 @@ python -m api.main
 ```
 - API docs: `http://localhost:8000/docs`
 
-### Frontend
-```bash
-cd frontend
-npm install
-cp .env.example .env
-npm run dev
-```
-- Admin dashboard: `http://localhost:3000`
+### Widget
+The widget is shipped as pre-built UMD bundles in `widget/` and served via the `widget` container.
 
 ## Common Commands
 - Backend (CLI): `python backend/main.py`
 - Backend (API): `python -m api.main`
-- Frontend dev: `npm run dev` (in `frontend/`)
-- Build dashboard: `npm run build` (in `frontend/`)
-- Build widget: `npm run build:widget` (in `frontend/`)
-- Preview build: `npm run preview` (in `frontend/`)
 
 ## Environment Variables
 ### Backend (`backend/.env`)
 - `API_KEY`: API auth key (required).
 - `GOOGLE_API_KEY`: Gemini API key (required).
 - `ALLOWED_ORIGINS`: Comma-separated CORS origins.
-
-### Frontend (`frontend/.env`)
-- `VITE_API_URL`: Backend API base URL.
-- `VITE_API_KEY`: API key for local dev.
 
 ## Behavior & Conventions
 - Keep multi-tenant isolation by always passing `client_id` in ingest/chat flows.
@@ -63,13 +47,11 @@ npm run dev
 
 ## Testing & Verification
 - No formal test suite; verify manually:
-  - Start backend and frontend.
-  - Ingest a site via Admin Dashboard.
-  - Chat via dashboard or widget to confirm responses.
+  - Start backend.
+  - Ingest a site via `http://localhost:8000/docs`.
+  - Chat via widget to confirm responses.
 
 ## Documentation References
 - `README.md`: product overview.
 - `PROJECT_SUMMARY.md`: end-to-end workflow and commands.
 - `backend/API_DOCUMENTATION.md`: API details.
-- `frontend/SETUP.md`: frontend setup/deploy.
-- `frontend/WIDGET_INTEGRATION.md`: widget install steps.

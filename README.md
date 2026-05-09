@@ -211,8 +211,8 @@ AI: "We serve NYC, Boston, and Philadelphia..."
 
 ## 🚀 Quick Start
 
-1. **Get widget code** → From admin
-2. **Copy the code** → 2 lines of JavaScript
+1. **Train the bot** → Use `http://localhost:8000/docs` to call `/ingest`
+2. **Copy the widget snippet** → 2 lines of JavaScript
 3. **Paste on site** → Into your HTML
 4. **Done** → Chat bubble appears automatically ✅
 

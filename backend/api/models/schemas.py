@@ -14,30 +14,11 @@ class IngestRequest(BaseModel):
     class Config:
         json_schema_extra = {
             "example": {
-                "url": "https://www.example.com",
+                "url": "https://www.simplytek.lk/",
                 "client_id": "shop_001",
-                "use_sitemap": True
-            },
-            "examples": [
-                {
-                    "summary": "Scrape using sitemap with Google API",
-                    "value": {
-                        "url": "https://www.example.com",
-                        "client_id": "shop_001",
-                        "use_sitemap": True,
-                        "api_provider": "google"
-                    }
-                },
-                {
-                    "summary": "Scrape using OpenRouter API",
-                    "value": {
-                        "url": "https://www.example.com",
-                        "client_id": "shop_001",
-                        "use_sitemap": False,
-                        "api_provider": "openrouter"
-                    }
-                }
-            ]
+                "use_sitemap": False,
+                "api_provider": "google"
+            }
         }
 
 class IngestResponse(BaseModel):

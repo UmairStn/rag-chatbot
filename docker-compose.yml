@@ -15,7 +15,7 @@ services:
       API_RELOAD: "False"
       ALLOWED_ORIGINS: "http://localhost:8080,http://127.0.0.1:8080"
     volumes:
-      - backend_vector_db:/app/backend/data/vector_db
+      - ./backend/data/vector_db:/app/backend/data/vector_db
 
   widget:
     build:

@@ -33,7 +33,7 @@ def get_chatbot_response(user_query, client_id):
         )
     else:
         # Default to Google
-        llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash")
+        llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash",convert_system_message_to_human=True)
     
     # Using gemini-embedding-001 - the standard embedding model for Google Generative AI
     embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")

@@ -244,7 +244,7 @@ curl -X POST http://localhost:5000/api/chat \
 - ✅ **DO** store `RAG_API_KEY` in `.env` (never commit to git)
 - ✅ **DO** add `.env` to `.gitignore`
 - ❌ **DO NOT** expose API key in client-side code
-- ❌ **DO NOT** expose API key in frontend logs
+- ❌ **DO NOT** expose API key in browser logs
 - ✅ **DO** use HTTPS in production
 - ✅ **DO** add rate limiting to your proxy
 

@@ -7,6 +7,8 @@ frontend/.DS_Store
 
 # Backend
 backend/__pycache__/
+backend/services/__pycache__/
+backend/core/__pycache__/
 backend/*.py[cod]
 backend/*$py.class
 backend/.Python
@@ -35,8 +37,11 @@ Thumbs.db
 
 # Root
 node_modules/
+**/__pycache__/
 .env
 .env.local
+widget/.env
+logs/
 *.log
 .cache/
 .pytest_cache/
