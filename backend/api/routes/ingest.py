@@ -80,7 +80,13 @@ async def ingest_website(
             )
         
         # Index the website
-        result = index_website_data(request.url, request.client_id, use_sitemap=request.use_sitemap, api_provider=request.api_provider)
+        result = index_website_data(
+            request.url, 
+            request.client_id, 
+            use_sitemap=request.use_sitemap, 
+            api_provider=request.api_provider,
+            force_reindex=request.force_reindex
+        )
         
         # Handle already indexed response
         if isinstance(result, dict) and result.get("status") == "already_indexed":
@@ -107,10 +113,12 @@ async def ingest_website(
         )
     except Exception as e:
         import logging
+        import traceback
         logger = logging.getLogger(__name__)
         logger.error(f"Ingest error: {str(e)}")
+        logger.error(f"Traceback: {traceback.format_exc()}")
         
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Indexing failed. Please contact support."
+            detail=f"Indexing failed: {str(e)}"
         )

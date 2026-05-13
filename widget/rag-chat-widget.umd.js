@@ -23,10 +23,23 @@
     .rag-chat-messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 12px; background: #f5f5f5; }
     .rag-chat-message { display: flex; gap: 10px; margin-bottom: 10px; }
     .rag-chat-message.user { justify-content: flex-end; }
-    .rag-chat-message-content { max-width: 70%; padding: 10px 15px; border-radius: 12px; word-wrap: break-word; line-height: 1.4; font-size: 14px; }
+    .rag-chat-message-content { max-width: 80%; padding: 10px 15px; border-radius: 12px; word-wrap: break-word; line-height: 1.5; font-size: 14px; }
     .rag-chat-message-content strong { font-weight: 700; }
+    .rag-chat-message-content .rag-chat-paragraph { margin: 0 0 6px 0; }
+    .rag-chat-message-content .rag-chat-paragraph:last-child { margin-bottom: 0; }
+    .rag-chat-message-content .rag-chat-paragraph--spacer { height: 8px; }
+    .rag-chat-message-content .rag-chat-bullets { margin: 6px 0; padding-left: 18px; }
+    .rag-chat-message-content .rag-chat-bullets li { margin: 4px 0; }
+    .rag-chat-message-content a { color: #2563eb; text-decoration: underline; word-break: break-all; }
+    .rag-chat-message-content a:hover { color: #1d4ed8; }
     .rag-chat-message.user .rag-chat-message-content { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
     .rag-chat-message.bot .rag-chat-message-content { background: white; color: #333; border: 1px solid #e0e0e0; }
+    .rag-chat-products-section { background: white; border: 1px solid #e0e0e0; border-radius: 8px; padding: 10px 12px; margin-top: 12px; }
+    .rag-chat-products-header { font-weight: 700; color: #667eea; margin-bottom: 10px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .rag-chat-product-item { margin-bottom: 8px; font-size: 12px; line-height: 1.5; }
+    .rag-chat-product-item:last-child { margin-bottom: 0; }
+    .rag-chat-product-link { color: #667eea; text-decoration: none; word-break: break-all; transition: color 0.2s; }
+    .rag-chat-product-link:hover { color: #764ba2; text-decoration: underline; }
     .rag-chat-input-area { padding: 15px; border-top: 1px solid #e0e0e0; display: flex; gap: 10px; }
     .rag-chat-input { flex: 1; border: 1px solid #e0e0e0; border-radius: 24px; padding: 10px 16px; font-size: 14px; outline: none; }
     .rag-chat-input:focus { border-color: #667eea; }
@@ -97,25 +110,120 @@
       })
       .then(r => r.json())
       .then(data => {
+        console.log('API Response:', data);
         if (data.status === 'success') {
-          addMessage(data.answer, 'bot');
+          console.log('Product Links:', data.product_links);
+          addMessage(data.answer, 'bot', data.product_links);
         } else {
           addMessage('Error: ' + (data.message || 'Unknown error'), 'bot');
         }
       })
-      .catch(() => addMessage('❌ Connection error', 'bot'));
+      .catch(err => {
+        console.error('Fetch error:', err);
+        addMessage('❌ Connection error', 'bot');
+      });
     }
-    function addMessage(text, sender) {
+    function addMessage(text, sender, productLinks) {
       const el = document.createElement('div');
       el.className = `rag-chat-message ${sender}`;
-      el.innerHTML = `<div class="rag-chat-message-content">${formatBold(text)}</div>`;
+      const contentHTML = `<div class="rag-chat-message-content">${formatMessage(text)}${productLinks && productLinks.length > 0 ? formatProductLinks(productLinks) : ''}</div>`;
+      el.innerHTML = contentHTML;
       messages.appendChild(el);
       messages.scrollTop = messages.scrollHeight;
     }
 
-    function formatBold(text) {
-      const escaped = escapeHtml(text);
-      return escaped.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    function formatMessage(text) {
+      if (!text) return '';
+      const normalized = String(text).replace(/\s+(?=\d+\.)/g, '\n');
+      const lines = normalized.split(/\r?\n/);
+      const htmlParts = [];
+      let listBuffer = [];
+
+      const flushList = () => {
+        if (!listBuffer.length) return;
+        htmlParts.push(`<ul class="rag-chat-bullets">${listBuffer.map(item => `<li>${item}</li>`).join('')}</ul>`);
+        listBuffer = [];
+      };
+
+      lines.forEach((line) => {
+        const match = line.match(/^\s*[\*\-•]\s+(.*)$/);
+        if (match) {
+          listBuffer.push(escapeHtml(match[1]));
+          return;
+        }
+        flushList();
+        const numbered = line.match(/^\s*(\d+)\.\s+(.*)$/);
+        if (numbered) {
+          htmlParts.push(`<div class="rag-chat-paragraph"><strong>${escapeHtml(numbered[1])}.</strong> ${linkify(escapeHtml(numbered[2]))}</div>`);
+          return;
+        }
+        if (line.trim() === '') {
+          htmlParts.push('<div class="rag-chat-paragraph rag-chat-paragraph--spacer"></div>');
+        } else {
+          htmlParts.push(`<div class="rag-chat-paragraph">${linkify(escapeHtml(line))}</div>`);
+        }
+      });
+
+      flushList();
+      return htmlParts.join('').replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    }
+
+    function linkify(text) {
+      return text.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
+    }
+
+    function formatProductLinks(links) {
+      if (!links || links.length === 0) return '';
+      
+      const productItems = links.map((url, index) => {
+        return `<div class="rag-chat-product-item"><strong>${index + 1}.</strong> <a href="${escapeHtml(url)}" class="rag-chat-product-link" target="_blank" rel="noopener noreferrer">${escapeHtml(url)}</a></div>`;
+      }).join('');
+
+      return `<div class="rag-chat-products-section"><div class="rag-chat-products-header">🔗 Product Links</div>${productItems}</div>`;
+    }
+
+    function extractProductName(url) {
+      try {
+        // Extract product slug from URL (e.g., /products/aspor-a337-30000-mah-22-5w-power-bank)
+        let slug = '';
+        
+        // Try different URL patterns
+        const patterns = [
+          /\/products\/([^/?#]+)/,  // /products/name
+          /\/items\/([^/?#]+)/,      // /items/name
+          /\/product\/([^/?#]+)/,    // /product/name
+          /\/items?=([^/?#&]+)/,     // ?item=name
+        ];
+        
+        for (let pattern of patterns) {
+          const match = url.match(pattern);
+          if (match && match[1]) {
+            slug = match[1];
+            break;
+          }
+        }
+        
+        if (slug) {
+          // Convert slug to readable name: replace hyphens with spaces, title case
+          return slug
+            .split('-')
+            .map(word => {
+              // Handle numbers specially (don't capitalize mid-word numbers)
+              if (/^\d+$/.test(word)) return word;
+              return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+            })
+            .join(' ');
+        }
+      } catch (e) {
+        // Fallback if regex fails
+      }
+      // Fallback: use the domain or a generic label
+      try {
+        const domain = new URL(url).hostname;
+        return `Product from ${domain}`;
+      } catch (e) {
+        return 'View Product';
+      }
     }
 
     function escapeHtml(text) {

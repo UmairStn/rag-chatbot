@@ -54,3 +54,8 @@ vector_db/
 .next/
 *.pem
 .pem
+
+# Test files (development only)
+test.html
+test_product_links.py
+

@@ -10,6 +10,7 @@ class IngestRequest(BaseModel):
     client_id: str
     use_sitemap: Optional[bool] = False
     api_provider: Optional[str] = "google"  # 'google' (default) or 'openrouter' - for backend indexing only
+    force_reindex: Optional[bool] = False  # Force re-indexing even if data already exists
     
     class Config:
         json_schema_extra = {
@@ -17,7 +18,8 @@ class IngestRequest(BaseModel):
                 "url": "https://www.simplytek.lk/",
                 "client_id": "shop_001",
                 "use_sitemap": False,
-                "api_provider": "google"
+                "api_provider": "google",
+                "force_reindex": False
             }
         }
 
@@ -46,6 +48,7 @@ class ChatResponse(BaseModel):
     status: str
     answer: str
     client_id: str
+    product_links: Optional[List[str]] = None
 
 class ErrorResponse(BaseModel):
     """Generic error response"""

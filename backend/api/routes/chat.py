@@ -52,12 +52,13 @@ async def chat(
                 detail="query and client_id are required"
             )
         
-        # Get response from chatbot service
-        answer = get_chatbot_response(request.query, request.client_id)
+        # Get response from chatbot service (now returns answer and product_links)
+        answer, product_links = get_chatbot_response(request.query, request.client_id)
         
         return ChatResponse(
             status="success",
             answer=answer,
+            product_links=product_links if product_links else None,
             client_id=request.client_id
         )
         
