@@ -24,6 +24,7 @@
     .rag-chat-message { display: flex; gap: 10px; margin-bottom: 10px; }
     .rag-chat-message.user { justify-content: flex-end; }
     .rag-chat-message-content { max-width: 70%; padding: 10px 15px; border-radius: 12px; word-wrap: break-word; line-height: 1.4; font-size: 14px; }
+    .rag-chat-message-content strong { font-weight: 700; }
     .rag-chat-message.user .rag-chat-message-content { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
     .rag-chat-message.bot .rag-chat-message-content { background: white; color: #333; border: 1px solid #e0e0e0; }
     .rag-chat-input-area { padding: 15px; border-top: 1px solid #e0e0e0; display: flex; gap: 10px; }
@@ -107,9 +108,14 @@
     function addMessage(text, sender) {
       const el = document.createElement('div');
       el.className = `rag-chat-message ${sender}`;
-      el.innerHTML = `<div class="rag-chat-message-content">${escapeHtml(text)}</div>`;
+      el.innerHTML = `<div class="rag-chat-message-content">${formatBold(text)}</div>`;
       messages.appendChild(el);
       messages.scrollTop = messages.scrollHeight;
+    }
+
+    function formatBold(text) {
+      const escaped = escapeHtml(text);
+      return escaped.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     }
 
     function escapeHtml(text) {
