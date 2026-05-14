@@ -41,7 +41,6 @@ node_modules/
 .env
 .env.local
 widget/.env
-logs/
 *.log
 .cache/
 .pytest_cache/
