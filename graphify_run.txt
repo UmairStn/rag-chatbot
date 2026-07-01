@@ -1,0 +1,4 @@
+Failed to find real location of C:\Users\UmrStn\AppData\Local\Programs\Python\Python314\python.exe
+error: no LLM API key found (23 doc/paper/image file(s) need semantic extraction). Set GEMINI_API_KEY or GOOGLE_API_KEY (gemini), MOONSHOT_API_KEY (kimi), ANTHROPIC_API_KEY (claude), OPENAI_API_KEY (openai), DEEPSEEK_API_KEY (deepseek), or pass --backend. A code-only corpus needs no key.
+[graphify extract] scanning c:\Project\chatbot-rag
+[graphify extract] found 27 code, 22 docs, 0 papers, 1 images

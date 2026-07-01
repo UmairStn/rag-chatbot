@@ -1,0 +1,345 @@
+{
+  "communities": {
+    "0": [
+      "basemodel",
+      "models_schemas",
+      "models_schemas_chatrequest",
+      "models_schemas_chatresponse",
+      "models_schemas_config",
+      "models_schemas_errorresponse",
+      "models_schemas_ingestrequest",
+      "models_schemas_ingestresponse",
+      "models_schemas_rationale_1",
+      "models_schemas_rationale_27",
+      "models_schemas_rationale_34",
+      "models_schemas_rationale_47",
+      "models_schemas_rationale_54",
+      "models_schemas_rationale_8",
+      "routes_chat",
+      "routes_chat_chat",
+      "routes_chat_rationale_24",
+      "routes_ingest",
+      "routes_ingest_ingest_website",
+      "routes_ingest_rationale_1",
+      "routes_ingest_rationale_23"
+    ],
+    "1": [
+      "services_chatbot",
+      "services_chatbot_answer_contains_links",
+      "services_chatbot_extract_product_links_from_db",
+      "services_chatbot_extract_product_names_from_answer",
+      "services_chatbot_extract_product_urls",
+      "services_chatbot_extract_query_tokens",
+      "services_chatbot_extract_shop_name",
+      "services_chatbot_filter_product_links",
+      "services_chatbot_get_chatbot_response",
+      "services_chatbot_is_product_query",
+      "services_chatbot_is_product_url",
+      "services_chatbot_is_store_info_query",
+      "services_chatbot_rationale_20",
+      "services_chatbot_rationale_295",
+      "services_chatbot_rationale_54",
+      "services_chatbot_remove_link_lines",
+      "services_chatbot_slugify",
+      "services_chatbot_wants_links"
+    ],
+    "2": [
+      "services_indexer",
+      "services_indexer_get_embeddings",
+      "services_indexer_index_website_data",
+      "services_indexer_rationale_12",
+      "services_indexer_rationale_38",
+      "services_scraper",
+      "services_scraper_extract_product_urls_from_html",
+      "services_scraper_fetch_sitemap_urls",
+      "services_scraper_filter_product_pages",
+      "services_scraper_rationale_12",
+      "services_scraper_rationale_165",
+      "services_scraper_rationale_212",
+      "services_scraper_rationale_268",
+      "services_scraper_rationale_32",
+      "services_scraper_rationale_83",
+      "services_scraper_scrape_multiple_urls",
+      "services_scraper_scrape_website",
+      "services_scraper_scrape_website_sitemap"
+    ],
+    "3": [
+      "backend_api_main_py",
+      "backend_api_middleware_auth_py",
+      "backend_api_models_schemas_py",
+      "backend_api_routes_chat_py",
+      "backend_api_routes_ingest_py",
+      "backend_services_chatbot_py",
+      "backend_services_indexer_py",
+      "backend_services_scraper_py",
+      "chromadb",
+      "google_gemini",
+      "openrouter",
+      "rag_chatbot_png",
+      "widget_rag_chat_widget_umd",
+      "widget_rag_chat_widget_umd_init"
+    ],
+    "4": [
+      "api_main",
+      "api_main_custom_openapi",
+      "api_main_general_exception_handler",
+      "api_main_health_check",
+      "api_main_http_exception_handler",
+      "api_main_rationale_1",
+      "api_main_rationale_114",
+      "api_main_rationale_126",
+      "api_main_rationale_55",
+      "api_main_rationale_70",
+      "api_main_rationale_86",
+      "api_main_root"
+    ],
+    "5": [
+      "middleware_auth",
+      "middleware_auth_apikeyvalidator",
+      "middleware_auth_apikeyvalidator_get_valid_api_key",
+      "middleware_auth_apikeyvalidator_verify_api_key",
+      "middleware_auth_rationale_1",
+      "middleware_auth_rationale_14",
+      "middleware_auth_rationale_18",
+      "middleware_auth_rationale_26"
+    ],
+    "6": [
+      "backend_main",
+      "backend_main_main",
+      "core_config",
+      "core_config_config",
+      "core_config_config_validate",
+      "diagnose"
+    ],
+    "7": [
+      "opencode_opencode",
+      "opencode_opencode_plugin",
+      "opencode_opencode_schema"
+    ],
+    "8": [
+      "opencode_package",
+      "opencode_package_dependencies",
+      "opencode_package_dependencies_opencode_ai_plugin"
+    ],
+    "9": [
+      "graphify_step1",
+      "graphify_step1_find_graphifypython"
+    ],
+    "10": [
+      "plugins_graphify",
+      "plugins_graphify_graphifyplugin"
+    ],
+    "11": [
+      "widget_potfolio_widget_umd",
+      "widget_potfolio_widget_umd_init"
+    ],
+    "12": [
+      "widget_rental_widget_umd",
+      "widget_rental_widget_umd_init"
+    ],
+    "13": [
+      "agent_md"
+    ],
+    "14": [
+      "api_init"
+    ],
+    "15": [
+      "backend_api_documentation_md"
+    ],
+    "16": [
+      "backend_client_proxy_guide_md"
+    ],
+    "17": [
+      "backend_core_config_py"
+    ],
+    "18": [
+      "backend_init"
+    ],
+    "19": [
+      "backend_main_py"
+    ],
+    "20": [
+      "backend_technical_deep_dive_md"
+    ],
+    "21": [
+      "core_database"
+    ],
+    "22": [
+      "core_init"
+    ],
+    "23": [
+      "core_security"
+    ],
+    "24": [
+      "docker_compose_yml"
+    ],
+    "25": [
+      "frontend_backend_integration_md"
+    ],
+    "26": [
+      "middleware_init"
+    ],
+    "27": [
+      "models_init"
+    ],
+    "28": [
+      "project_summary_md"
+    ],
+    "29": [
+      "readme_md"
+    ],
+    "30": [
+      "routes_init"
+    ],
+    "31": [
+      "services_init"
+    ]
+  },
+  "cohesion": {
+    "0": 0.12380952380952381,
+    "1": 0.1830065359477124,
+    "2": 0.1895424836601307,
+    "3": 0.1978021978021978,
+    "4": 0.16666666666666666,
+    "5": 0.2857142857142857,
+    "6": 0.4,
+    "7": 0.6666666666666666,
+    "8": 0.6666666666666666,
+    "9": 1.0,
+    "10": 1.0,
+    "11": 1.0,
+    "12": 1.0,
+    "13": 1.0,
+    "14": 1.0,
+    "15": 1.0,
+    "16": 1.0,
+    "17": 1.0,
+    "18": 1.0,
+    "19": 1.0,
+    "20": 1.0,
+    "21": 1.0,
+    "22": 1.0,
+    "23": 1.0,
+    "24": 1.0,
+    "25": 1.0,
+    "26": 1.0,
+    "27": 1.0,
+    "28": 1.0,
+    "29": 1.0,
+    "30": 1.0,
+    "31": 1.0
+  },
+  "gods": [
+    {
+      "id": "services_chatbot_get_chatbot_response",
+      "label": "get_chatbot_response()",
+      "degree": 13
+    },
+    {
+      "id": "services_indexer_index_website_data",
+      "label": "index_website_data()",
+      "degree": 8
+    },
+    {
+      "id": "services_scraper_scrape_website_sitemap",
+      "label": "scrape_website_sitemap()",
+      "degree": 8
+    },
+    {
+      "id": "services_scraper_scrape_website",
+      "label": "scrape_website()",
+      "degree": 7
+    },
+    {
+      "id": "routes_chat_chat",
+      "label": "chat()",
+      "degree": 6
+    },
+    {
+      "id": "routes_ingest_ingest_website",
+      "label": "ingest_website()",
+      "degree": 6
+    },
+    {
+      "id": "services_scraper_scrape_multiple_urls",
+      "label": "scrape_multiple_urls()",
+      "degree": 6
+    },
+    {
+      "id": "services_chatbot_filter_product_links",
+      "label": "_filter_product_links()",
+      "degree": 5
+    },
+    {
+      "id": "backend_api_routes_chat_py",
+      "label": "backend/api/routes/chat.py",
+      "degree": 5
+    },
+    {
+      "id": "backend_services_indexer_py",
+      "label": "backend/services/indexer.py",
+      "degree": 5
+    }
+  ],
+  "surprises": [
+    {
+      "source": "ingest_website()",
+      "target": "IngestResponse",
+      "source_files": [
+        "backend/api/routes/ingest.py",
+        "backend/api/models/schemas.py"
+      ],
+      "confidence": "INFERRED",
+      "relation": "calls",
+      "why": "inferred connection - not explicitly stated in source"
+    },
+    {
+      "source": "chat()",
+      "target": "ChatResponse",
+      "source_files": [
+        "backend/api/routes/chat.py",
+        "backend/api/models/schemas.py"
+      ],
+      "confidence": "INFERRED",
+      "relation": "calls",
+      "why": "inferred connection - not explicitly stated in source"
+    },
+    {
+      "source": "chat()",
+      "target": "get_chatbot_response()",
+      "source_files": [
+        "backend/api/routes/chat.py",
+        "backend/services/chatbot.py"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "bridges separate communities"
+    },
+    {
+      "source": "ingest_website()",
+      "target": "index_website_data()",
+      "source_files": [
+        "backend/api/routes/ingest.py",
+        "backend/services/indexer.py"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "bridges separate communities"
+    },
+    {
+      "source": "main()",
+      "target": "get_chatbot_response()",
+      "source_files": [
+        "backend/main.py",
+        "backend/services/chatbot.py"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "bridges separate communities"
+    }
+  ],
+  "tokens": {
+    "input": 59648,
+    "output": 1934
+  }
+}
