@@ -1,2 +1,0 @@
-Failed to find real location of C:\Users\UmrStn\AppData\Local\Programs\Python\Python314\python.exe
-C:\Users\UmrStn\AppData\Local\Programs\Python\Python314\Lib\site-packages\graphify\__init__.py
