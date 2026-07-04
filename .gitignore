@@ -11,15 +11,32 @@ backend/services/__pycache__/
 backend/core/__pycache__/
 backend/*.py[cod]
 backend/*$py.class
+backend/*.so
 backend/.Python
 backend/venv/
 backend/env/
+backend/ENV/
 backend/.venv
 backend/.env
-backend/.env.local
-backend/data/vector_db/
+backend/.env.*
+backend/data/
 backend/logs/
 backend/*.log
+backend/build/
+backend/dist/
+backend/*.egg-info/
+backend/.eggs/
+backend/*.egg
+backend/develop-eggs/
+backend/downloads/
+backend/eggs/
+backend/lib/
+backend/lib64/
+backend/parts/
+backend/sdist/
+backend/var/
+backend/wheels/
+backend/.installed.cfg
 
 # IDE
 .vscode/
@@ -58,5 +75,8 @@ vector_db/
 test.html
 test_product_links.py
 
+# product review file
 product_review.md
 
+# Graphify
+graphify-out/
